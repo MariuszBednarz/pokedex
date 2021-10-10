@@ -2,4 +2,8 @@
     box-sizing: border-box;
     margin: 0;
     font-family: lato;
+
+}
+body {
+    background-color:#e8e8e4 ;
 }

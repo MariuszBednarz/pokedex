@@ -1,6 +1,17 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import DisplayPokemon from "./DisplayPokemon";
+import { Button, TextField } from "@material-ui/core";
+import styled from "styled-components";
+
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const btnStyle = { margin: "10px", width: "150px", backgroundColor:"#d8e2dc" }
 
 function PokeList() {
   const [pokemon, setPokemon] = useState([]);
@@ -50,17 +61,39 @@ function PokeList() {
     setInputValue(e.target.value);
   };
 
-
   return (
-    <div>
-      <div>
-        <input type="text" onChange={handleChange} />
+    <Wrapper>
+      <TextField
+      style={{ marginTop: "40px" }}
+        variant="outlined"
+        size="normal"
+        placeholder="search for your pokemon"
+        type="text"
+        onChange={handleChange}
+      />
+      <div style={{ padding: "20px" }}>
+        <Button
+          variant="contained"
+          style={btnStyle}
+          disabled={offset <= 0}
+          onClick={handlePrev}
+        >
+          {" "}
+          {offset <= 0 ? `First Page` : `Prev`}{" "}
+        </Button>
+        <Button
+          variant="contained"
+          style={btnStyle}
+          disabled={offset >= 150}
+          onClick={handleNext}
+        >
+          {" "}
+          {offset >= 150 ? `Last Page` : `Next`}{" "}
+        </Button>
       </div>
-      <button disabled={offset <= 0} onClick={handlePrev}> {offset <= 0 ? `First Page` : `Prev`} </button>
-      <button disabled={offset >= 150} onClick={handleNext}> {offset >= 150 ? `Last Page` : `Next`} </button>
 
       <DisplayPokemon pokemon={pokemon} inputValue={inputValue} />
-    </div>
+    </Wrapper>
   );
 }
 
