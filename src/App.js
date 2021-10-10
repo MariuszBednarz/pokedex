@@ -1,7 +1,10 @@
- import React from "react";
+import React from "react";
+import Routing from "./components/Routing";
+
+
 function App() {
   return (
-    <div>jest</div>
+    <Routing/>
   );
 }
 
