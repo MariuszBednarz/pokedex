@@ -62,7 +62,6 @@ const ThisPokemon = ({ thisPokemon }) => {
       .get(url)
       .then((response) => {
         setOnePokemon(response.data);
-        console.log(response.data);
       })
       .catch((err) => {
         console.log(err);
@@ -70,14 +69,14 @@ const ThisPokemon = ({ thisPokemon }) => {
   };
 
   useEffect(() => {
-    getPokemon(thisPokemon.url);
-  }, [thisPokemon.url]);
+    getPokemon(thisPokemon?.url);
+  }, [thisPokemon?.url]);
 
   return (
     <TileWrap
       onePokemon={onePokemon}
       key={onePokemon.id}
-      onClick={() => history.push(`/Pokemon#${onePokemon.id}`)}
+      onClick={() => history.push(`/${onePokemon.name}`)}
     >
       <P>
         #{onePokemon.id} {onePokemon.name}

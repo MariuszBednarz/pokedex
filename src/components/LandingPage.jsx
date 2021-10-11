@@ -1,9 +1,9 @@
 import React from "react";
 import PokeList from "./PokemonDatabase";
 
-function LandingPage() {
+function LandingPage({setOnePokemon}) {
     return (
-      <PokeList/>
+      <PokeList setOnePokemon={setOnePokemon}/>
     );
   }
   

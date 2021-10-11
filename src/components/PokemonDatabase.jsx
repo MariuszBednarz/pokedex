@@ -13,7 +13,7 @@ const Wrapper = styled.div`
 
 const btnStyle = { margin: "10px", width: "150px", backgroundColor:"#d8e2dc" }
 
-function PokeList() {
+function PokeList({ setOnePokemon }) {
   const [pokemon, setPokemon] = useState([]);
   const [limit, setLimit] = useState(15);
   let [offset, setOffset] = useState(0);
@@ -27,11 +27,12 @@ function PokeList() {
       .then((response) => {
         console.log(response.data.results);
         setPokemon(response.data.results);
+        setOnePokemon(response.data.results)
       })
       .catch((err) => {
         console.log(err);
       });
-  }, [limit, offset]);
+  }, [limit, offset, setOnePokemon]);
 
   const handlePrev = () => {
     if (offset === 0) {
@@ -66,7 +67,6 @@ function PokeList() {
       <TextField
       style={{ marginTop: "40px" }}
         variant="outlined"
-        size="normal"
         placeholder="search for your pokemon"
         type="text"
         onChange={handleChange}
