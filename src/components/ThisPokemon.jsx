@@ -26,8 +26,21 @@ const StyledBtn = styled(Button)`
     margin: 5px;
     width: 28%;
     height: 50px;
-    font-size: 12px;
+    font-size: 10px;
     background-color: #fec5bb;
+  }
+`;
+const StyledBtnIsFav = styled(Button)`
+  && {
+    margin: 5px;
+    width: 28%;
+    height: 50px;
+    font-size: 10px;
+    background-color: #ff806a;
+
+    &:hover {
+      background-color: #fb4f30;
+    }
   }
 `;
 
@@ -91,14 +104,17 @@ const ThisPokemon = ({ thisPokemon }) => {
     abilities: [{ ability: { name: "" } }],
   });
   const history = useHistory();
+  const [isFavourite, setIsFavourite] = useState(false);
+
   const getPokemon = (url) => {
     axios
       .get(url)
       .then((response) => {
         setOnePokemon(response.data);
       })
-      .catch(error => {console.log(error.response)}
-      );
+      .catch((error) => {
+        console.log(error.response);
+      });
   };
 
   useEffect(() => {
@@ -106,12 +122,18 @@ const ThisPokemon = ({ thisPokemon }) => {
   }, [thisPokemon?.url]);
 
   const addToFavouritesHandle = () => {
+    setIsFavourite(true);
     axios
       .post("http://localhost:3000/favourites/", {
         id: `${onePokemon.id}`,
       })
       .then()
       .catch(console.log("error"));
+  };
+
+  const removeFromFavouritesHandle = () => {
+    setIsFavourite(false);
+    console.log("usuwa z ulub.");
   };
 
   const addToArenaHandle = () => {
@@ -141,9 +163,19 @@ const ThisPokemon = ({ thisPokemon }) => {
       </FeaturesWrap>
       <Gleam></Gleam>
       <FlexDiv>
-        <StyledBtn onClick={addToFavouritesHandle} variant="contained">
-          Add to favourites
-        </StyledBtn>
+        {isFavourite ? (
+          <StyledBtnIsFav
+            onClick={removeFromFavouritesHandle}
+            variant="contained"
+          >
+            Remove from favourites
+          </StyledBtnIsFav>
+        ) : (
+          <StyledBtn onClick={addToFavouritesHandle} variant="contained">
+            Add to favourites
+          </StyledBtn>
+        )}
+
         <StyledBtn onClick={addToArenaHandle} variant="contained">
           Send to arena
         </StyledBtn>
