@@ -9,6 +9,16 @@ import ThisPokemon from "./ThisPokemon";
 import { Button } from "@material-ui/core";
 import styled from "styled-components";
 
+const StyledBtn = styled(Button)`
+  && {
+    margin: 0 20vw 0 0;
+    margin: 20px;
+    width: 200px;
+    font-size: 24px;
+    background-color: #fec5bb;
+  }
+`;
+
 const Nav = styled.div`
   display: flex;
   flex-direction: row;
@@ -20,52 +30,55 @@ const Nav = styled.div`
   box-shadow: black 0 0 20px;
 `;
 
-const styles = {
-  margin: "0",
-  width: "200px",
-  fontSize: "24px",
-  backgroundColor: "#fec5bb",
-};
+const FlexDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+
+
+const L = styled(Link)`
+  text-decoration: none;
+`;
+
+
 
 function Routing() {
   const [onePokemon, setOnePokemon] = useState(null);
+  
+
   return (
     <Router>
       <Nav>
-        <Link
-          style={{ textDecoration: "none", margin: "0 20vw 0 0 " }}
-          to="/LandingPage"
-        >
-          <Button style={styles} variant="contained">
-            *Pokedex*
-          </Button>
-        </Link>
-        <Link style={{ textDecoration: "none" }} to="/ArenaPage">
-          <Button style={styles} variant="contained">
-            Arena
-          </Button>
-        </Link>
-        <Link style={{ textDecoration: "none" }} to="/FavouritesPage">
-          <Button style={styles} variant="contained">
-            Favourites
-          </Button>
-        </Link>
+        <L to="/LandingPage">
+          <StyledBtn variant="contained">*Pokedex*</StyledBtn>
+        </L>
+        <L to="/ArenaPage">
+          <StyledBtn variant="contained">Arena</StyledBtn>
+        </L>
+        <L to="/FavouritesPage">
+          <StyledBtn variant="contained">Favourites</StyledBtn>
+        </L>
       </Nav>
       <Switch>
         <Route path="/LandingPage">
           <LandingPage setOnePokemon={setOnePokemon} />
         </Route>
         <Route path="/ArenaPage">
-          <ArenaPage />
+          <ArenaPage setOnePokemon={setOnePokemon} />
         </Route>
         <Route path="/FavouritesPage">
-          <FavouritesPage />
+          <FavouritesPage setOnePokemon={setOnePokemon} />
         </Route>
-        <ThisPokemon thisPokemon={onePokemon} />
         {onePokemon?.map((onePokemon) => (
           <Route path={`/${onePokemon.name}`}>
-            <div>{onePokemon.name}</div>
-            <ThisPokemon thisPokemon={onePokemon} />
+            <FlexDiv>
+              <ThisPokemon thisPokemon={onePokemon} />
+              <L to="/LandingPage">
+                <StyledBtn variant="contained">go back</StyledBtn>
+              </L>
+            </FlexDiv>
           </Route>
         ))}
       </Switch>
