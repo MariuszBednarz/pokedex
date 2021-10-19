@@ -44,6 +44,20 @@ const StyledBtnIsFav = styled(Button)`
   }
 `;
 
+const StyledBtnOnArena = styled(Button)`
+  && {
+    margin: 5px;
+    width: 28%;
+    height: 50px;
+    font-size: 10px;
+    background-color: #9ab8a7;
+
+    &:hover {
+      background-color: #c6dfd0;
+    }
+  }
+`;
+
 const FlexDiv = styled.div`
   display: flex;
   flex-direction: row;
@@ -105,6 +119,7 @@ const ThisPokemon = ({ thisPokemon }) => {
   });
   const history = useHistory();
   const [isFavourite, setIsFavourite] = useState(false);
+  const [isOnArena, setIsOnArena] = useState(false);
 
   const getPokemon = (url) => {
     axios
@@ -121,27 +136,33 @@ const ThisPokemon = ({ thisPokemon }) => {
     getPokemon(thisPokemon?.url);
   }, [thisPokemon?.url]);
 
-  const addToFavouritesHandle = () => {
+  const handleAddToFavourites = () => {
     setIsFavourite(true);
     axios
       .post("http://localhost:3000/favourites/", {
         id: `${onePokemon.id}`,
       })
-      .then()
+
       .catch(console.log("error"));
   };
 
-  const removeFromFavouritesHandle = () => {
+  const handleRemoveFromFavourites = () => {
     setIsFavourite(false);
     console.log("usuwa z ulub.");
   };
 
-  const addToArenaHandle = () => {
+  const handleAddToArena = () => {
     axios
       .post("http://localhost:3000/arena/", {
         id: `${onePokemon.id}`,
       })
       .catch(console.log("error"));
+    setIsOnArena(true);
+  };
+
+  const handleRemoveFromArena = () => {
+    setIsOnArena(false);
+    console.log("usuwa z areny");
   };
 
   return (
@@ -165,20 +186,26 @@ const ThisPokemon = ({ thisPokemon }) => {
       <FlexDiv>
         {isFavourite ? (
           <StyledBtnIsFav
-            onClick={removeFromFavouritesHandle}
+            onClick={handleRemoveFromFavourites}
             variant="contained"
           >
             Remove from favourites
           </StyledBtnIsFav>
         ) : (
-          <StyledBtn onClick={addToFavouritesHandle} variant="contained">
+          <StyledBtn onClick={handleAddToFavourites} variant="contained">
             Add to favourites
           </StyledBtn>
         )}
+        {isOnArena ? (
+          <StyledBtnOnArena onClick={handleRemoveFromArena} variant="contained">
+            Remove from arena
+          </StyledBtnOnArena>
+        ) : (
+          <StyledBtn onClick={handleAddToArena} variant="contained">
+            Send to arena
+          </StyledBtn>
+        )}
 
-        <StyledBtn onClick={addToArenaHandle} variant="contained">
-          Send to arena
-        </StyledBtn>
         <StyledBtn
           onClick={() => {
             history.push(`/${onePokemon.name}`);
