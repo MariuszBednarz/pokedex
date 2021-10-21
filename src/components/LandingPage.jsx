@@ -1,9 +1,9 @@
 import React from "react";
-import PokeList from "./PokemonDatabase";
+import PokemonDatabase from "./PokemonDatabase";
 
-function LandingPage({setOnePokemon}) {
+function LandingPage({setOnePokemon,favouritesIDs, onArenaIDs }) {
     return (
-      <PokeList setOnePokemon={setOnePokemon}/>
+      <PokemonDatabase favouritesIDs={favouritesIDs} setOnePokemon={setOnePokemon} onArenaIDs={onArenaIDs}/>
     );
   }
   

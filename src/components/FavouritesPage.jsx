@@ -1,13 +1,19 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import ThisPokemon from "./ThisPokemon";
 import styled from "styled-components";
 
+const Wrapper = styled.div`
+display: flex;
+flex-direction: column;
+align-items: center;
+`;
+
 const FlexDiv = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
+  flex-wrap: wrap;
 `;
 
 const TitleDiv = styled.div`
@@ -16,24 +22,23 @@ const TitleDiv = styled.div`
   font-size: 24px;
 `;
 
-function FavouritesPage({ onePokemon }) {
-  const [favouritesIDs, setFavouritesIDs] = useState();
-
-  const getIDs = () => {
-    axios.get("http://localhost:3000/favourites/").then((response) => {
-      setFavouritesIDs(response.id);
-    });
-  };
-
-  useEffect(() => {
-    getIDs();
-  }, []);
+function FavouritesPage({ favouritesIDs, setFavouritesIDs }) {
+  const BASE_URL = `https://pokeapi.co/api/v2/pokemon`;
 
   return (
-    <FlexDiv>
+    <Wrapper>
       <TitleDiv>your favourite pokemons</TitleDiv>
-      <ThisPokemon onePokemon={onePokemon} key={favouritesIDs}></ThisPokemon>
-    </FlexDiv>
+
+      <FlexDiv>
+        {favouritesIDs.map((id) => (
+          <ThisPokemon
+            thisPokemon={{ url: `${BASE_URL}/${id}` }}
+            favouritesIDs={favouritesIDs}
+            setFavouritesIDs={setFavouritesIDs}
+          ></ThisPokemon>
+        ))}
+      </FlexDiv>
+    </Wrapper>
   );
 }
 

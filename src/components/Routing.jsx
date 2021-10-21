@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import ArenaPage from "./ArenaPage";
@@ -37,16 +38,35 @@ const FlexDiv = styled.div`
   justify-content: center;
 `;
 
-
 const L = styled(Link)`
   text-decoration: none;
 `;
 
-
-
 function Routing() {
   const [onePokemon, setOnePokemon] = useState(null);
-  
+  const [favouritesIDs, setFavouritesIDs] = useState(undefined);
+  const [onArenaIDs, setOnArenaIDs] = useState(undefined);
+
+  const getIDs = () => {
+    axios.get("http://localhost:3000/favourites/").then((response) => {
+      setFavouritesIDs(response.data.map(({ id }) => +id));
+      setOnArenaIDs(response.data.map(({ id }) => +id));
+    });
+  };
+
+  useEffect(() => {
+    getIDs();
+  }, [favouritesIDs, setFavouritesIDs]);
+
+  // onArenaIDs, setOnArenaIDs
+
+  if (favouritesIDs === undefined) {
+    return null;
+  }
+
+  if (onArenaIDs === undefined) {
+    return null;
+  }
 
   return (
     <Router>
@@ -63,18 +83,31 @@ function Routing() {
       </Nav>
       <Switch>
         <Route path="/LandingPage">
-          <LandingPage setOnePokemon={setOnePokemon} />
+          <LandingPage
+            setOnePokemon={setOnePokemon}
+            favouritesIDs={favouritesIDs}
+            onArenaIDs={onArenaIDs}
+          />
         </Route>
         <Route path="/ArenaPage">
-          <ArenaPage setOnePokemon={setOnePokemon} />
+          <ArenaPage setOnArenaIDs={setOnArenaIDs} onArenaIDs={onArenaIDs} />
         </Route>
         <Route path="/FavouritesPage">
-          <FavouritesPage setOnePokemon={setOnePokemon} />
+          <FavouritesPage
+            setFavouritesIDs={setFavouritesIDs}
+            favouritesIDs={favouritesIDs}
+          />
         </Route>
         {onePokemon?.map((onePokemon) => (
           <Route path={`/${onePokemon.name}`}>
             <FlexDiv>
-              <ThisPokemon thisPokemon={onePokemon} />
+              <ThisPokemon
+                thisPokemon={onePokemon}
+                setFavouritesIDs={setFavouritesIDs}
+                favouritesIDs={favouritesIDs}
+                setOnArenaIDs={setOnArenaIDs}
+                onArenaIDs={onArenaIDs}
+              />
               <L to="/LandingPage">
                 <StyledBtn variant="contained">go back</StyledBtn>
               </L>

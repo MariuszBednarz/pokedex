@@ -11,9 +11,9 @@ const Wrapper = styled.div`
   align-items: center;
 `;
 
-const btnStyle = { margin: "10px", width: "150px", backgroundColor:"#d8e2dc" }
+const btnStyle = { margin: "10px", width: "150px", backgroundColor: "#d8e2dc" };
 
-function PokeList({ setOnePokemon }) {
+function PokemonDatabase({ setOnePokemon, favouritesIDs, onArenaIDs }) {
   const [pokemon, setPokemon] = useState([]);
   const [limit, setLimit] = useState(15);
   let [offset, setOffset] = useState(0);
@@ -21,13 +21,11 @@ function PokeList({ setOnePokemon }) {
 
   useEffect(() => {
     axios
-      .get(
-        `https://pokeapi.co/api/v2/pokemon/?limit=${limit}&offset=${offset}}`
-      )
+      .get(`https://pokeapi.co/api/v2/pokemon/?limit=${limit}&offset=${offset}`)
       .then((response) => {
         console.log(response.data.results);
         setPokemon(response.data.results);
-        setOnePokemon(response.data.results)
+        setOnePokemon(response.data.results);
       })
       .catch((err) => {
         console.log(err);
@@ -65,7 +63,7 @@ function PokeList({ setOnePokemon }) {
   return (
     <Wrapper>
       <TextField
-      style={{ marginTop: "40px" }}
+        style={{ marginTop: "40px" }}
         variant="outlined"
         placeholder="search for your pokemon"
         type="text"
@@ -92,9 +90,14 @@ function PokeList({ setOnePokemon }) {
         </Button>
       </div>
 
-      <DisplayPokemon pokemon={pokemon} inputValue={inputValue} />
+      <DisplayPokemon
+        pokemon={pokemon}
+        inputValue={inputValue}
+        favouritesIDs={favouritesIDs}
+        onArenaIDs={onArenaIDs}
+      />
     </Wrapper>
   );
 }
 
-export default PokeList;
+export default PokemonDatabase;

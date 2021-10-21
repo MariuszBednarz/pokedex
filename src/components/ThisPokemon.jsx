@@ -109,7 +109,13 @@ const Features = styled.p`
   text-transform: uppercase;
 `;
 
-const ThisPokemon = ({ thisPokemon }) => {
+const ThisPokemon = ({
+  thisPokemon,
+  favouritesIDs,
+  setFavouritesIDs,
+  onArenaIDs,
+  setOnArenaIDs,
+}) => {
   const [onePokemon, setOnePokemon] = useState({
     name: "",
     sprites: {
@@ -126,6 +132,10 @@ const ThisPokemon = ({ thisPokemon }) => {
       .get(url)
       .then((response) => {
         setOnePokemon(response.data);
+        const isPokemonFavourite = favouritesIDs.includes(response.data.id);
+        setIsFavourite(isPokemonFavourite);
+        const isOnArena = onArenaIDs.includes(response.data.id)
+        setIsOnArena(isOnArena);
       })
       .catch((error) => {
         console.log(error.response);
@@ -134,20 +144,25 @@ const ThisPokemon = ({ thisPokemon }) => {
 
   useEffect(() => {
     getPokemon(thisPokemon?.url);
-  }, [thisPokemon?.url]);
+  }, [thisPokemon?.url, setFavouritesIDs, setOnArenaIDs]);
 
   const handleAddToFavourites = () => {
-    setIsFavourite(true);
     axios
       .post("http://localhost:3000/favourites/", {
         id: `${onePokemon.id}`,
       })
+      .then(() => setIsFavourite(true))
 
-      .catch(console.log("error"));
+      .catch((error) => console.log("error", error.response));
   };
 
   const handleRemoveFromFavourites = () => {
-    setIsFavourite(false);
+    axios
+      .delete(`http://localhost:3000/favourites/${onePokemon.id}`)
+      .then(() => setIsFavourite(false))
+      
+      .catch(console.log("error"));
+
     console.log("usuwa z ulub.");
   };
 
@@ -156,12 +171,16 @@ const ThisPokemon = ({ thisPokemon }) => {
       .post("http://localhost:3000/arena/", {
         id: `${onePokemon.id}`,
       })
+      .then(() => setIsOnArena(true))
       .catch(console.log("error"));
-    setIsOnArena(true);
   };
 
   const handleRemoveFromArena = () => {
-    setIsOnArena(false);
+    axios
+      .delete(`http://localhost:3000/arena/${onePokemon.id}`)
+      .then(() => setIsOnArena(false))
+      .catch(console.log("error"));
+
     console.log("usuwa z areny");
   };
 
