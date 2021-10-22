@@ -47,18 +47,22 @@ function Routing() {
   const [favouritesIDs, setFavouritesIDs] = useState(undefined);
   const [onArenaIDs, setOnArenaIDs] = useState(undefined);
 
-  const getIDs = () => {
+  const getFavouritesIDs = () => {
     axios.get("http://localhost:3000/favourites/").then((response) => {
       setFavouritesIDs(response.data.map(({ id }) => +id));
+    });
+  };
+
+  const getArenaIDs = () => {
+    axios.get("http://localhost:3000/arena/").then((response) => {
       setOnArenaIDs(response.data.map(({ id }) => +id));
     });
   };
 
   useEffect(() => {
-    getIDs();
-  }, [favouritesIDs, setFavouritesIDs]);
-
-  // onArenaIDs, setOnArenaIDs
+    getFavouritesIDs();
+    getArenaIDs();
+  }, []);
 
   if (favouritesIDs === undefined) {
     return null;
@@ -85,7 +89,9 @@ function Routing() {
         <Route path="/LandingPage">
           <LandingPage
             setOnePokemon={setOnePokemon}
+            setFavouritesIDs={setFavouritesIDs}
             favouritesIDs={favouritesIDs}
+            setOnArenaIDs={setOnArenaIDs}
             onArenaIDs={onArenaIDs}
           />
         </Route>

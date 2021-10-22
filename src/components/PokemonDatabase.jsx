@@ -13,7 +13,7 @@ const Wrapper = styled.div`
 
 const btnStyle = { margin: "10px", width: "150px", backgroundColor: "#d8e2dc" };
 
-function PokemonDatabase({ setOnePokemon, favouritesIDs, onArenaIDs }) {
+function PokemonDatabase({ setOnePokemon, favouritesIDs, setOnArenaIDs, onArenaIDs }) {
   const [pokemon, setPokemon] = useState([]);
   const [limit, setLimit] = useState(15);
   let [offset, setOffset] = useState(0);
@@ -95,6 +95,7 @@ function PokemonDatabase({ setOnePokemon, favouritesIDs, onArenaIDs }) {
         inputValue={inputValue}
         favouritesIDs={favouritesIDs}
         onArenaIDs={onArenaIDs}
+        setOnArenaIDs={setOnArenaIDs}
       />
     </Wrapper>
   );

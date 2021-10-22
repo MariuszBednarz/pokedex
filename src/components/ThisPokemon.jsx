@@ -134,8 +134,8 @@ const ThisPokemon = ({
         setOnePokemon(response.data);
         const isPokemonFavourite = favouritesIDs.includes(response.data.id);
         setIsFavourite(isPokemonFavourite);
-        const isOnArena = onArenaIDs.includes(response.data.id)
-        setIsOnArena(isOnArena);
+        const isPokemonOnArena = onArenaIDs.includes(response.data.id);
+        setIsOnArena(isPokemonOnArena);
       })
       .catch((error) => {
         console.log(error.response);
@@ -152,7 +152,6 @@ const ThisPokemon = ({
         id: `${onePokemon.id}`,
       })
       .then(() => setIsFavourite(true))
-
       .catch((error) => console.log("error", error.response));
   };
 
@@ -160,10 +159,8 @@ const ThisPokemon = ({
     axios
       .delete(`http://localhost:3000/favourites/${onePokemon.id}`)
       .then(() => setIsFavourite(false))
-      
       .catch(console.log("error"));
 
-    console.log("usuwa z ulub.");
   };
 
   const handleAddToArena = () => {
@@ -172,16 +169,14 @@ const ThisPokemon = ({
         id: `${onePokemon.id}`,
       })
       .then(() => setIsOnArena(true))
-      .catch(console.log("error"));
+      .catch((error) => console.log("error", error.response));
   };
 
   const handleRemoveFromArena = () => {
     axios
       .delete(`http://localhost:3000/arena/${onePokemon.id}`)
       .then(() => setIsOnArena(false))
-      .catch(console.log("error"));
-
-    console.log("usuwa z areny");
+      .catch((error) => console.log("error", error.response));
   };
 
   return (
