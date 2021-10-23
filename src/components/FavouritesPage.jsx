@@ -1,7 +1,6 @@
 import React, {useEffect} from "react";
 import ThisPokemon from "./ThisPokemon";
 import styled from "styled-components";
-import axios from "axios";
 
 const Wrapper = styled.div`
 display: flex;
@@ -26,15 +25,6 @@ const TitleDiv = styled.div`
 function FavouritesPage({ favouritesIDs, setFavouritesIDs }) {
   const BASE_URL = `https://pokeapi.co/api/v2/pokemon`;
 
-  const getFavouritesIDs = () => {
-    axios.get("http://localhost:3000/favourites/").then((response) => {
-      setFavouritesIDs(response.data.map(({ id }) => +id));
-    });
-  };
-  
-  useEffect(() => {
-    getFavouritesIDs();
-  }, []);
 
   return (
     <Wrapper>

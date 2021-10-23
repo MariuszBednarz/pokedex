@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import ThisPokemon from "./ThisPokemon";
 import styled from "styled-components";
-import axios from "axios";
 import { Button } from "@material-ui/core";
 
 const Wrapper = styled.div`
@@ -37,21 +36,16 @@ const StyledBtn = styled(Button)`
 function ArenaPage({ onArenaIDs, setOnArenaIDs }) {
   const BASE_URL = `https://pokeapi.co/api/v2/pokemon`;
   const [arenaLimit, setArenaLimit] = useState(0)
+  const [winner, setWinner] = useState(null)
 
-  const getArenaIDs = () => {
-    axios.get("http://localhost:3000/arena/").then((response) => {
-      setOnArenaIDs(response.data.map(({ id }) => +id));
-    });
-  };
+const handleFight = () => {
 
-  useEffect(() => {
-    getArenaIDs();
-  }, []);
+};
 
   return (
     <Wrapper>
       <TitleDiv>Pokemons on arena</TitleDiv>
-      <StyledBtn disabled={arenaLimit !== 2}>Fight!</StyledBtn>
+      <StyledBtn onClick={handleFight} disabled={arenaLimit !== 2}>Fight!</StyledBtn>
 
       <FlexDiv>
         {onArenaIDs.map((id) => (
@@ -59,6 +53,8 @@ function ArenaPage({ onArenaIDs, setOnArenaIDs }) {
             thisPokemon={{ url: `${BASE_URL}/${id}` }}
             onArenaIDs={onArenaIDs}
             setOnArenaIDs={setOnArenaIDs}
+            arenaLimit={arenaLimit}
+            setArenaLimit={setArenaLimit}
           ></ThisPokemon>
         ))}
       </FlexDiv>

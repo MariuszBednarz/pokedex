@@ -111,10 +111,8 @@ const Features = styled.p`
 
 const ThisPokemon = ({
   thisPokemon,
-  favouritesIDs,
-  setFavouritesIDs,
-  onArenaIDs,
-  setOnArenaIDs,
+  setArenaLimit,
+  arenaLimit,
 }) => {
   const [onePokemon, setOnePokemon] = useState({
     name: "",
@@ -126,6 +124,9 @@ const ThisPokemon = ({
   const history = useHistory();
   const [isFavourite, setIsFavourite] = useState(false);
   const [isOnArena, setIsOnArena] = useState(false);
+
+  const [favouritesIDs, setFavouritesIDs] = useState(null);
+  const [onArenaIDs, setOnArenaIDs] = useState(null);
 
   const getPokemon = (url) => {
     axios
@@ -142,9 +143,28 @@ const ThisPokemon = ({
       });
   };
 
+  const getFavouritesIDs = () => {
+    axios.get("http://localhost:3000/favourites/").then((response) => {
+      setFavouritesIDs(response.data.map(({ id }) => +id));
+    });
+  };
+
+  const getArenaIDs = () => {
+    axios.get("http://localhost:3000/arena/").then((response) => {
+      setOnArenaIDs(response.data.map(({ id }) => +id));
+    });
+  };
+
+  useEffect(() => {
+    getFavouritesIDs();
+    getArenaIDs();
+    console.log(`getFav i Arena poszedł`)
+  }, []);
+  
   useEffect(() => {
     getPokemon(thisPokemon?.url);
-  }, [thisPokemon?.url, setFavouritesIDs, setOnArenaIDs]);
+    console.log(`get pokemon poszedł`)
+  }, [thisPokemon?.url, favouritesIDs, onArenaIDs]);
 
   const handleAddToFavourites = () => {
     axios
@@ -160,7 +180,6 @@ const ThisPokemon = ({
       .delete(`http://localhost:3000/favourites/${onePokemon.id}`)
       .then(() => setIsFavourite(false))
       .catch(console.log("error"));
-
   };
 
   const handleAddToArena = () => {
@@ -168,16 +187,24 @@ const ThisPokemon = ({
       .post("http://localhost:3000/arena/", {
         id: `${onePokemon.id}`,
       })
-      .then(() => setIsOnArena(true))
+      .then(() => {
+        setIsOnArena(true);
+        setArenaLimit(arenaLimit + 1);
+      })
       .catch((error) => console.log("error", error.response));
   };
 
   const handleRemoveFromArena = () => {
     axios
       .delete(`http://localhost:3000/arena/${onePokemon.id}`)
-      .then(() => setIsOnArena(false))
+      .then(() => {
+        setIsOnArena(false);
+        setArenaLimit(arenaLimit - 1);
+      })
       .catch((error) => console.log("error", error.response));
   };
+
+ 
 
   return (
     <TileWrap onePokemon={onePokemon} key={onePokemon.id}>
