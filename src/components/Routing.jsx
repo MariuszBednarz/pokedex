@@ -10,38 +10,6 @@ import ThisPokemon from "./ThisPokemon";
 import { Button } from "@material-ui/core";
 import styled from "styled-components";
 
-const StyledBtn = styled(Button)`
-  && {
-    margin: 0 20vw 0 0;
-    margin: 20px;
-    width: 200px;
-    font-size: 24px;
-    background-color: #fec5bb;
-  }
-`;
-
-const Nav = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
-  width: 100vw;
-  height: 150px;
-  background-color: #f8edeb;
-  box-shadow: black 0 0 20px;
-`;
-
-const FlexDiv = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-`;
-
-const L = styled(Link)`
-  text-decoration: none;
-`;
-
 function Routing() {
   const [onePokemon, setOnePokemon] = useState(null);
   const [favouritesIDs, setFavouritesIDs] = useState(undefined);
@@ -126,3 +94,35 @@ function Routing() {
 }
 
 export default Routing;
+
+const StyledBtn = styled(Button)`
+  && {
+    margin: 0 20vw 0 0;
+    margin: 20px;
+    width: 200px;
+    font-size: 24px;
+    background-color: #fec5bb;
+  }
+`;
+
+const Nav = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  width: 100vw;
+  height: 150px;
+  background-color: #f8edeb;
+  box-shadow: black 0 0 20px;
+`;
+
+const FlexDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+
+const L = styled(Link)`
+  text-decoration: none;
+`;

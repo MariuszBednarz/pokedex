@@ -4,15 +4,6 @@ import DisplayPokemon from "./DisplayPokemon";
 import { Button, TextField } from "@material-ui/core";
 import styled from "styled-components";
 
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
-
-const btnStyle = { margin: "10px", width: "150px", backgroundColor: "#d8e2dc" };
-
 function PokemonDatabase({ setOnePokemon, favouritesIDs, onArenaIDs }) {
   const [pokemon, setPokemon] = useState([]);
   const [limit, setLimit] = useState(15);
@@ -70,24 +61,22 @@ function PokemonDatabase({ setOnePokemon, favouritesIDs, onArenaIDs }) {
         onChange={handleChange}
       />
       <div style={{ padding: "20px" }}>
-        <Button
+        <StyledBtn
           variant="contained"
-          style={btnStyle}
           disabled={offset <= 0}
           onClick={handlePrev}
         >
           {" "}
           {offset <= 0 ? `First Page` : `Prev`}{" "}
-        </Button>
-        <Button
+        </StyledBtn>
+        <StyledBtn
           variant="contained"
-          style={btnStyle}
           disabled={offset >= 150}
           onClick={handleNext}
         >
           {" "}
           {offset >= 150 ? `Last Page` : `Next`}{" "}
-        </Button>
+        </StyledBtn>
       </div>
 
       <DisplayPokemon
@@ -101,3 +90,18 @@ function PokemonDatabase({ setOnePokemon, favouritesIDs, onArenaIDs }) {
 }
 
 export default PokemonDatabase;
+
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const StyledBtn = styled(Button)`
+  && {
+    margin: 10px;
+    width: 150px;
+    background-color: #d8e2dc;
+  }
+`;

@@ -2,13 +2,6 @@ import React from "react";
 import ThisPokemon from "./ThisPokemon";
 import styled from "styled-components";
 
-const DisplayWrapper = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-`;
-
 const DisplayPokemon = ({ pokemon, inputValue, favouritesIDs, onArenaIDs }) => {
   return (
     <DisplayWrapper>
@@ -44,3 +37,10 @@ const DisplayPokemon = ({ pokemon, inputValue, favouritesIDs, onArenaIDs }) => {
 };
 
 export default DisplayPokemon;
+
+const DisplayWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+`;

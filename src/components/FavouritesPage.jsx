@@ -1,26 +1,8 @@
-import React, {useEffect} from "react";
+import React from "react";
 import ThisPokemon from "./ThisPokemon";
 import styled from "styled-components";
 
-const Wrapper = styled.div`
-display: flex;
-flex-direction: column;
-align-items: center;
-`;
 
-const FlexDiv = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-`;
-
-const TitleDiv = styled.div`
-  margin-top: 50px;
-  text-transform: uppercase;
-  font-size: 24px;
-`;
 
 function FavouritesPage({ favouritesIDs, setFavouritesIDs }) {
   const BASE_URL = `https://pokeapi.co/api/v2/pokemon`;
@@ -43,3 +25,24 @@ function FavouritesPage({ favouritesIDs, setFavouritesIDs }) {
 }
 
 export default FavouritesPage;
+
+const Wrapper = styled.div`
+display: flex;
+flex-direction: column;
+align-items: center;
+`;
+
+const FlexDiv = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+`;
+
+const TitleDiv = styled.div`
+  margin-top: 50px;
+  text-transform: uppercase;
+  font-size: 24px;
+`;
+
