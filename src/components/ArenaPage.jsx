@@ -4,13 +4,12 @@ import styled from "styled-components";
 import { Button } from "@material-ui/core";
 import axios from "axios";
 
-
 function ArenaPage({ onArenaIDs, setOnArenaIDs }) {
   const BASE_URL = `https://pokeapi.co/api/v2/pokemon`;
   const [pokemon1, setPokemon1] = useState();
   const [pokemon2, setPokemon2] = useState();
-  const [winner, setWinner] = useState(true);
-
+  const [winner1, setWinner1] = useState(undefined);
+  const [winner2, setWinner2] = useState(undefined);
 
   useEffect(() => {
     axios
@@ -28,17 +27,18 @@ function ArenaPage({ onArenaIDs, setOnArenaIDs }) {
   }, []);
 
   const handleFight = () => {
-    console.log(winner);
     if (onArenaIDs.length === 2) {
       if (
         pokemon1.base_experience * pokemon1.weight >
         pokemon2.base_experience * pokemon2.weight
       ) {
-        setWinner(true);
+        setWinner1(true);
+        setWinner2(false);
         alert(`${pokemon1 ? pokemon1.name : ``} is a winner!`);
       } else {
       }
-      setWinner(true);
+      setWinner2(true);
+      setWinner1(false);
       alert(`${pokemon2 ? pokemon2.name : ``} is a winner!`);
     } else alert(`You need 2 pokemon on arena!`);
   };
@@ -49,14 +49,21 @@ function ArenaPage({ onArenaIDs, setOnArenaIDs }) {
       <StyledBtn onClick={handleFight} disabled={onArenaIDs.length !== 2}>
         Fight!
       </StyledBtn>
-
+      <FlexDiv>
+        <TitleDiv>
+          {winner1 === undefined ? `` : winner1 ? `winner` : `defeated`}
+        </TitleDiv>
+        <TitleDiv>
+          {winner2 === undefined ? `` : winner2 ? `winner` : `defeated`}
+        </TitleDiv>
+      </FlexDiv>
       <FlexDiv>
         {onArenaIDs.map((id) => (
-            <ThisPokemon
-              thisPokemon={{ url: `${BASE_URL}/${id}` }}
-              onArenaIDs={onArenaIDs}
-              setOnArenaIDs={setOnArenaIDs}
-            ></ThisPokemon>
+          <ThisPokemon
+            thisPokemon={{ url: `${BASE_URL}/${id}` }}
+            onArenaIDs={onArenaIDs}
+            setOnArenaIDs={setOnArenaIDs}
+          ></ThisPokemon>
         ))}
       </FlexDiv>
     </Wrapper>
@@ -80,7 +87,8 @@ const FlexDiv = styled.div`
 `;
 
 const TitleDiv = styled.div`
-  margin-top: 50px;
+  margin: 50px 100px 30px 100px;
+
   text-transform: uppercase;
   font-size: 24px;
 `;
