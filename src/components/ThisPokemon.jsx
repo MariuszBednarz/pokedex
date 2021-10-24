@@ -174,14 +174,14 @@ const Gleam = styled.div`
   background-color: white;
   opacity: 0.3;
   width: 25vw;
-  height: 100px;
+  height: 150px;
   position: absolute;
   transform: skewY(35deg) translate(0px, 100px);
 `;
 
 const StyledBtn = styled(Button)`
   && {
-    margin: 5px;
+    margin: 3px;
     width: 28%;
     height: 50px;
     font-size: 10px;
@@ -226,12 +226,12 @@ const FlexDiv = styled.div`
 const TileWrap = styled.div`
   display: flex;
   flex-direction: column;
-  height: 25vw;
-  width: 25vw;
+  height: 19vw;
+  width: 19vw;
   background-color: #d8e2dc;
   align-items: center;
   justify-content: center;
-  margin: 3vw;
+  margin: 1vw;
   transition: 0.2s;
   box-shadow: #f1b1a6 5px 5px 15px;
   border-radius: 20px;
@@ -244,7 +244,7 @@ const TileWrap = styled.div`
     background-color: #e9f3ed;
   }
   &:hover ${Gleam} {
-    height: 150px;
+    height: 180px;
     opacity: 0.4;
     transform: SkewY(35deg) translate(0px, -150px);
   }

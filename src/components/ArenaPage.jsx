@@ -87,7 +87,7 @@ const FlexDiv = styled.div`
 `;
 
 const TitleDiv = styled.div`
-  margin: 50px 100px 30px 100px;
+  margin: 50px 60px 50px 60px;
 
   text-transform: uppercase;
   font-size: 24px;
